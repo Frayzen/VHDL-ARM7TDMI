@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -e
+cd $(dirname $0)
 RED="\e[1;31m"          # Bold Red
 
 # Dependency analyzer for VHDL files
