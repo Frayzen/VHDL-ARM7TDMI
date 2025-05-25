@@ -2,3 +2,6 @@
 !.gitignore
 !*.do
 !*.vhd
+!tbs/
+!tbs/*.vhd
+!*.sh

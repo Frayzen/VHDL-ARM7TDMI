@@ -1,0 +1,9 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+package types is
+    subtype reg_t is std_logic_vector(31 downto 0);
+    subtype reg_addr_t is std_logic_vector(3 downto 0); -- Address of the register
+    type reg_table_t is array (0 to 15) of reg_t;
+end package types;

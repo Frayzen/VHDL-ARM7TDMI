@@ -1,11 +1,12 @@
-# What standard to use. This is optional and defaults to VHDL2008.
 standard = "2008"
-# File names are either absolute or relative to the parent folder of the vhdl_ls.toml file
+
 [libraries]
-# Wildcards and exclude patterns are supported
+# Use defaultlib instead of 'work' for all files
 defaultlib.files = [
-'*/*.vhd',
+    "src/*.vhd",        # All source files including types.vhd
+    "simu/tbs/*.vhd"    # All testbench files
 ]
+
 [lint]
-unused = 'error' # Upgrade the 'unused' diagnostic to the 'error' severity
-unnecessary_work_library = false # Disable linting for the 'library work;' statement
+unused = 'error'
+unnecessary_work_library = false
