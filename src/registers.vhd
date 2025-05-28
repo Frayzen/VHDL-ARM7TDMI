@@ -14,9 +14,9 @@ use work.types.all;  -- Import all definitions from the package
 -- B: Bus de données en lecture du port B
 entity Registers is
   port (
-        W: in reg_t;
+        W: in word_t;
         RA, RB, RW: in reg_addr_t;
-        A, B : out reg_t;
+        A, B : out word_t;
         CLK, RST, WE: in Std_logic
       );
 end entity;

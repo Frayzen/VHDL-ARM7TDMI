@@ -7,9 +7,9 @@ use work.types.all;  -- Import all definitions from the package
 entity ALU is
 -- -----------------------------------
   port ( OP       : in  op_t;    -- Opcode
-         A        : in  reg_t;   -- Input A
-         B        : in  reg_t;   -- Input B
-         S        : out reg_t;   -- Output S
+         A        : in  word_t;   -- Input A
+         B        : in  word_t;   -- Input B
+         S        : out word_t;   -- Output S
          FLAGS    : out flags_t     -- Flag (NZCV)
         );
 end entity ALU;

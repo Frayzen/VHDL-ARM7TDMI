@@ -31,7 +31,7 @@ entity Processing_Unit is
 end entity;
 
 architecture Behaviour of Processing_Unit is
-  signal A, B, RES : reg_t;
+  signal A, B, RES : word_t;
 begin
 
   REGS : entity work.Registers port Map

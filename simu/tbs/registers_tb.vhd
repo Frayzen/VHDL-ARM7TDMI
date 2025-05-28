@@ -8,9 +8,9 @@ end entity;
 
 architecture Bench of Registers_tb is
     -- Component signals
-    signal W : reg_t;
+    signal W : word_t;
     signal RA, RB, RW : std_logic_vector(3 downto 0); -- 4-bit addresses
-    signal A, B : reg_t;
+    signal A, B : word_t;
     signal CLK, RST, WE, FINISHED : std_logic := '0';
     
     -- Clock period definition

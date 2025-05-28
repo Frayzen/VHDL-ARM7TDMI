@@ -8,7 +8,7 @@ use work.types.all;  -- Import all definitions from the package
 entity sign_extender is generic (n : integer range 1 to 32);
   port (
     E : in STD_LOGIC_VECTOR(n - 1 downto 0);
-    S : out reg_t
+    S : out word_t
   );
 end entity;
 

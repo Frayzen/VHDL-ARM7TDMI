@@ -9,7 +9,7 @@ end entity;
 architecture Bench of sign_extender_tb is
     -- Component signals
     signal E : STD_LOGIC_VECTOR(3 downto 0); -- 4-bit addresses
-    signal S : reg_t;
+    signal S : word_t;
     constant CLK_PERIOD : time := 10 ns;
 begin
     -- Instantiation of the Registers entity
