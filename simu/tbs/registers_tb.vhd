@@ -14,7 +14,7 @@ architecture Bench of Registers_tb is
     signal CLK, RST, WE, FINISHED : std_logic := '0';
     
     -- Clock period definition
-    constant CLK_PERIOD : time := 2 ns;
+    constant CLK_PERIOD : time := 10 ns;
 begin
     -- Instantiation of the Registers entity
     regs: entity WORK.Registers 
@@ -30,6 +30,7 @@ begin
         WE => WE
     );
 
+    -- Clock generation
     clk <= not clk after CLK_PERIOD / 2 when finished /= '1' else '0';
 
     -- Stimulus process

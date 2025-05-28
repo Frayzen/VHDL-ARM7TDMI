@@ -1,15 +1,16 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use work.types.all;  -- Import all definitions from the package
 
 -- -----------------------------------
 entity ALU is
 -- -----------------------------------
-  port ( OP       : in  std_logic_vector(2 downto 0);    -- Opcode
-         A        : in  std_logic_vector(31 downto 0);   -- Input A
-         B        : in  std_logic_vector(31 downto 0);   -- Input B
-         S        : out std_logic_vector(31 downto 0);   -- Output S
-         FLAGS    : out std_logic_vector(3 downto 0)     -- Flag (NZCV)
+  port ( OP       : in  op_t;    -- Opcode
+         A        : in  reg_t;   -- Input A
+         B        : in  reg_t;   -- Input B
+         S        : out reg_t;   -- Output S
+         FLAGS    : out flags_t     -- Flag (NZCV)
         );
 end entity ALU;
 
@@ -30,8 +31,6 @@ architecture RTL of ALU is
 
     signal result     : std_logic_vector(31 downto 0);
 
-    signal negative: std_logic; -- N (FLAGS(3))
-    signal zero: std_logic; -- Z (FLAGS(2))
     signal carry : std_logic;  -- C (FLAGS(1))
     signal overflow   : std_logic;  -- V (FLAGS(0))
 begin
@@ -58,7 +57,7 @@ begin
 
                 result   <= temp_result;
 
-                carry <= not temp_sub(32); 
+                carry <= temp_sub(32); 
                 overflow <= (A(31) and not B(31) and not temp_result(31)) or 
                            (not A(31) and B(31) and temp_result(31));
 
