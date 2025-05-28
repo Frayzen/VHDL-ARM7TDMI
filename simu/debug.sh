@@ -32,7 +32,7 @@ fi
 vsim -do "\
 vlib work;\
 vsim $select;\
-add wave -recursive $select/*;\
+add wave *;\
 run -all;\
 config wave -signalnamewidth 1
 wave zoom full;
