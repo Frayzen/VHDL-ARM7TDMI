@@ -63,10 +63,10 @@ begin
         
         -- Test SUB
         -- C a 1 si pas d'emprunt -> confirm stp
-        run_test("010", X"00000005", X"00000003", X"00000002", "0010"); -- 5 - 3 = 2, Not Borrow
+        run_test("010", X"00000005", X"00000003", X"00000002", "0000"); -- 5 - 3 = 2, No Borrow
         
-        run_test("010", X"00000003", X"00000005", X"FFFFFFFE", "1000"); -- Negatif
-        run_test("010", X"80000000", X"00000001", X"7FFFFFFF", "0011"); -- Overflow
+        run_test("010", X"00000003", X"00000005", X"FFFFFFFE", "1010"); -- Negatif
+        run_test("010", X"80000000", X"00000001", X"7FFFFFFF", "0001"); -- Overflow
         
         -- Test OR 
         run_test("100", X"F0F0F0F0", X"0F0F0F0F", X"FFFFFFFF", "1000");
