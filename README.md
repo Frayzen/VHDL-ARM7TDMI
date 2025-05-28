@@ -14,6 +14,19 @@ This repository contains a complete implementation of a 32-bit single-cycle MIPS
 - Data memory
 - Program counter
 
+## Part 3 table
+
+| INSTRUCTION | nPCSel | RegWr | ALUSrc | ALUCtr | PSREn | MemWr | WrSrc | RegSel | RegAff |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **ADDi** | 0 | 1 | 1 | 000 | 0 | 0 | 0 | 0 | 0 |
+| **ADDr** | 0 | 1 | 0 | 000 | 0 | 0 | 0 | 0 | 0 |
+| **BAL** | 1 | 0 | 0 | 000 | 0 | 0 | 0 | 0 | 0 |
+| **BLT** | 0 | 0 | 0 | 000 | 0 | 0 | 0 | 0 | 0 |
+| **CMP** | 0 | 0 | 1 | 010 | 1 | 0 | 0 | 0 | 0 |
+| **LDR** | 0 | 1 | 1 | 000 | 0 | 0 | 1 | 1 | 0 |
+| **MOV** | 0 | 1 | 1 | 001 | 0 | 0 | 0 | 0 | 0 |
+| **STR** | 0 | 0 | 1 | 000 | 0 | 1 | 0 | 1 | 1 |
+
 ## Key Features
 - **MIPS ISA Support**: Implements core instructions (R-type, I-type, J-type)
 - **Pipelined Design**: Single-clock-cycle-per-instruction execution
@@ -58,4 +71,5 @@ This repository contains a complete implementation of a 32-bit single-cycle MIPS
 
 # Debug specific test
 ./simu/debug.sh # Note that fzf is recommended (but not required)
+
 

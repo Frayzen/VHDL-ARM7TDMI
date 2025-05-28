@@ -58,7 +58,6 @@ begin
         -- Test reset
         run_test('1', '1', X"12345678", X"00000000");
 
-       
         
         wait;
     end process;
