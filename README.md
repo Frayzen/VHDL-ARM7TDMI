@@ -15,8 +15,7 @@ This repository contains a complete implementation of a 32-bit single-cycle MIPS
 - Program counter
 
 ## Key Features
-- **MIPS ISA Support**: Implements core instructions (R-type, I-type, J-type)
-- **Pipelined Design**: Single-clock-cycle-per-instruction execution
+- **MIPS ISA Support**: Implements core instructions (R-type, I-type, J-type) **Pipelined Design**: Single-clock-cycle-per-instruction execution
 - **Tested Components**:
   - 32x32-bit register file with dual read ports
   - ALU with 16 operations (AND, OR, ADD, SUB, etc.)
@@ -46,6 +45,7 @@ This repository contains a complete implementation of a 32-bit single-cycle MIPS
 ### Requirements
 - ModelSim
 - VHDL-2008 compatible simulator
+- vhdeps python module to compile
 
 ### Running Tests
 ```bash

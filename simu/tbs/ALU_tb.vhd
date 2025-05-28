@@ -90,7 +90,8 @@ begin
         wait;
     end process;
 
-    uut: ALU port map (
+    uut: entity work.ALU
+    port map (
         OP    => OP,
         A     => A,
         B     => B,
