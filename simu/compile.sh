@@ -29,8 +29,8 @@ function print() {
 
 mkdir -p logs
 
-print -n "${GRAY}[Compiling sources]"
 srcs=$(./dep_tree.sh)
+print -n "${GRAY}[Compiling sources]"
 for src in $srcs; do
   if ! $(vcom -2008 -quiet $src 2>&1 >"logs/compile.log"); then
     print "${RED}ERROR" >&2

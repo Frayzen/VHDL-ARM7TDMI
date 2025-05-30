@@ -2,4 +2,7 @@
 
 cd $(dirname $0)
 set -e
-vhdeps dump -i work:../src -i work:./tbs | awk '{print $4}' 
+
+includes=$(find ../src ./tbs -type d | sed 's/^/-i work:/' | tr '\n' ' ')
+
+vhdeps dump $(echo $includes) | awk '{print $4}' 

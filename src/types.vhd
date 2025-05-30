@@ -10,4 +10,5 @@ package types is
     subtype flags_t is std_logic_vector(3 downto 0); -- ALU flags (NZCV)
     type reg_table_t is array (0 to 15) of word_t;
     type data_table_t is array (0 to 63) of word_t;
+    subtype imm_t is std_logic_vector(7 downto 0); -- Immediate value type
 end package types;

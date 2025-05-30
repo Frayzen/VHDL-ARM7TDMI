@@ -62,7 +62,7 @@ begin
         wait;
     end process;
 
-    uut: PSR port map (
+    uut: entity work.PSR port map (
         DATAIN => DATAIN,
         RST => RST,
         CLK => CLK,

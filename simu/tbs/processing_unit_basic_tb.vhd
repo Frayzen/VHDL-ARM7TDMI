@@ -3,12 +3,12 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.types.all;  -- Assuming this contains op_t, reg_addr_t, flags_t definitions
 
-entity Processing_Unit_TB is
-end entity Processing_Unit_TB;
+entity Processing_Unit_basic_TB is
+end entity Processing_Unit_basic_TB;
 
-architecture Testbench of Processing_Unit_TB is
+architecture Testbench of Processing_Unit_basic_TB is
     -- Component declaration
-    component Processing_Unit is
+    component Processing_Unit_basic is
         port (
             OP : in op_t;
             RA, RB, RW : in reg_addr_t;
@@ -33,7 +33,7 @@ architecture Testbench of Processing_Unit_TB is
     end function;
 begin
     -- Instantiate the Processing Unit
-    DUT: Processing_Unit
+    DUT: Processing_Unit_basic
         port map (
             OP => OP,
             RA => RA,
