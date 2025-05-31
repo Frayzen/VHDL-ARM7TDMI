@@ -4,6 +4,7 @@ standard = "2008"
 # Use defaultlib instead of 'work' for all files
 defaultlib.files = [
     "src/*.vhd",        # All source files including types.vhd
+    "src/*/*.vhd",      # All source files including types.vhd
     "simu/tbs/*.vhd"    # All testbench files
 ]
 

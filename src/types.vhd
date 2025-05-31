@@ -11,4 +11,5 @@ package types is
     type reg_table_t is array (0 to 15) of word_t;
     type data_table_t is array (0 to 63) of word_t;
     subtype imm_t is std_logic_vector(7 downto 0); -- Immediate value type
+    type RAM64x32 is array (0 to 63) of std_logic_vector (31 downto 0);
 end package types;
