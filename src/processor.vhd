@@ -6,13 +6,14 @@ use work.types.all;  -- Import all definitions from the package
 entity processor is
     port (
       CLK, RST : in std_logic;
+      RegDisp : out word_t;
       dbgInstruction : out word_t
     );
 end entity;
 
 architecture rtl of processor is
   signal offset : pc_offset_t;
-  signal instruction, psrOut : word_t;
+  signal instruction, psrOut, RegBOut : word_t;
   signal muxOut, Rm, Rd, Rn : reg_addr_t;
   signal Imm : imm_t;
   signal flags : flags_t;
@@ -73,7 +74,8 @@ begin
     MemWr => MemWr,
     flags => flags,
     immCom => ALUSrc,
-    resCom => WrSrc
+    resCom => WrSrc,
+    RegBOut => RegBOut
   );
 
   REG_PSR : entity work.PSR
@@ -83,6 +85,15 @@ begin
     WE => PSREn,
     DATAIN => x"0000000" & flags,
     DATAOUT => psrOut
+  );
+
+  REG_DISP : entity work.PSR
+  port map (
+    RST => RST,
+    CLK => CLK,
+    WE => RegAff,
+    DATAIN => RegBOut,
+    DATAOUT => RegDisp
   );
 
 end architecture;

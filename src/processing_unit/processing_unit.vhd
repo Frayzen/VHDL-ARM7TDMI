@@ -33,7 +33,7 @@ entity Processing_Unit is
         FLAGS : out flags_t := (others => '0');
         Imm : in imm_t := (others => '0');
   -- Debug outputs
-        dbgRegAOut, dbgRegBOut: out word_t := (others => '0')
+        RegAOut, RegBOut: out word_t := (others => '0')
       );
 end entity;
 
@@ -96,8 +96,8 @@ begin
     S => immOut
   );
 
-  dbgRegAOut <= busA;
-  dbgRegBOut <= busB;
+  RegAOut <= busA;
+  RegBOut <= busB;
 
 end architecture;
 
