@@ -30,8 +30,9 @@ function print() {
 mkdir -p logs
 
 srcs=$(./dep_tree.sh)
-print -n "${GRAY}[Compiling sources]"
+print "${GRAY}[Compiling sources]"
 for src in $srcs; do
+  print "${GRAY}| Compiling $src"
   if ! $(vcom -2008 -quiet $src 2>&1 >"logs/compile.log"); then
     print "${RED}ERROR" >&2
     print "${LIGHT_RED}$(cat logs/compile.log)" >&2
@@ -39,4 +40,4 @@ for src in $srcs; do
     exit 1
   fi
 done
-print " ${GREEN}DONE"
+print "${GREEN}[DONE]"

@@ -1,19 +1,20 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use work.types.all;  -- Import all definitions from the package
 
 entity PSR is
     port (
-        DATAIN   : in  std_logic_vector(31 downto 0);
+        DATAIN   : in  word_t;
         RST      : in  std_logic;
         CLK      : in  std_logic;
         WE       : in  std_logic;
-        DATAOUT  : out std_logic_vector(31 downto 0)
+        DATAOUT  : out word_t 
     );
 end entity;
 
 architecture  RTL of PSR is
-    signal reg : std_logic_vector(31 downto 0) := (others => '0');
+    signal reg : word_t := (others => '0');
 begin
     process(CLK, RST)
     begin

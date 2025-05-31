@@ -1,11 +1,12 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use work.types.all;  -- Import all definitions from the package
 
 entity decoder is
     port (
-        instruction : in std_logic_vector(31 downto 0);
-        PSR         : in std_logic_vector(31 downto 0);
+        instruction : in word_t;
+        PSR         : in word_t;
 
         nPCSel      : out std_logic;
         RegWr       : out std_logic;
