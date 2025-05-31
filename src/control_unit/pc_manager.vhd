@@ -17,7 +17,7 @@ entity pc_manager is
 end entity;
 
 architecture  RTL of pc_manager is
-    signal ext_offset : word_t;
+    signal ext_offset, cur_pc : word_t := (others => '0');
 begin
     
     PC_EXTENDER : entity work.sign_extender generic map (n => 24)
@@ -28,13 +28,14 @@ begin
     process(CLK, RST)
     begin
       if rst = '1' then
-        pc <= (others => '0');
+        cur_pc <= (others => '0');
       elsif rising_edge(CLK) then
         if nPCsel = '0' then
-          pc <= Std_Logic_Vector(unsigned(pc) + 1);
+          cur_pc <= Std_Logic_Vector(unsigned(cur_pc) + 1);
         else
-          pc <= Std_Logic_Vector(unsigned(pc) + unsigned(ext_offset) + 1);
+          cur_pc <= Std_Logic_Vector(unsigned(cur_pc) + unsigned(ext_offset) + 1);
         end if;
       end if;
     end process;
+    pc <= cur_pc;
 end architecture;
