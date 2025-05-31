@@ -7,16 +7,6 @@ entity Processing_Unit_basic_TB is
 end entity Processing_Unit_basic_TB;
 
 architecture Testbench of Processing_Unit_basic_TB is
-    -- Component declaration
-    component Processing_Unit_basic is
-        port (
-            OP : in op_t;
-            RA, RB, RW : in reg_addr_t;
-            CLK, RST, WE : in std_logic;
-            FLAGS : out flags_t
-        );
-    end component;
-
     -- Test signals
     signal OP : op_t;
     signal RA, RB, RW : reg_addr_t;
@@ -33,7 +23,7 @@ architecture Testbench of Processing_Unit_basic_TB is
     end function;
 begin
     -- Instantiate the Processing Unit
-    DUT: Processing_Unit_basic
+  DUT: entity work.Processing_Unit_basic
         port map (
             OP => OP,
             RA => RA,

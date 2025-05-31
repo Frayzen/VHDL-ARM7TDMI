@@ -20,22 +20,6 @@ architecture RTL of decoder_tb is
     signal RegSel  : std_logic;
     signal RegAff  : std_logic;
 
-    component decoder is
-        port (
-            instruction : in std_logic_vector(31 downto 0);
-            PSR         : in std_logic_vector(31 downto 0);
-            nPCSel      : out std_logic;
-            RegWr       : out std_logic;
-            ALUSrc      : out std_logic;
-            ALUCtr      : out std_logic_vector(2 downto 0);
-            PSREn       : out std_logic;
-            MemWr       : out std_logic;
-            WrSrc       : out std_logic;
-            RegSel      : out std_logic;
-            RegAff      : out std_logic
-        );
-    end component;
-
 begin
 
     process
@@ -104,7 +88,7 @@ begin
         wait;
     end process;
 
-    uut: decoder
+    uut: entity work.decoder
         port map (
             instruction => instruction,
             PSR         => PSR,

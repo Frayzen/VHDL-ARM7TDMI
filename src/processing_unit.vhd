@@ -19,16 +19,21 @@ use work.types.all;  -- Import all definitions from the package
 -- RW: Bus d’adresses en écriture sur 4 bits
 -- CLK: Horloge,
 -- RST : reset asynchrone (actif à l’état haut) non représenté sur le schéma
--- RegWr: Register Write Enable sur 1 bit
 -- WrEn: Memory Write Enable sur 1 bit
+-- RegWr: Register Write Enable sur 1 bit
+-- immCom: weather the ALU is considering the immediate value (1) or not (0)
+-- resCom: weather the ALU result is a pointer (1) or raw value (0)
 -- FLAGS: Flags (NZCV)
+-- Imm: Immediate value
 entity Processing_Unit is
   port (
-        OP : in op_t;
-        RA, RB, RW: in reg_addr_t;
-        CLK, RST, WrEn, RegWr, immCom, resCom: in Std_logic;
-        FLAGS : out flags_t;
-        Imm : imm_t
+        OP : in op_t := (others => '0');
+        RA, RB, RW: in reg_addr_t := (others => '0');
+        CLK, RST, WrEn, RegWr, immCom, resCom: in Std_logic := '0'; 
+        FLAGS : out flags_t := (others => '0');
+        Imm : in imm_t := (others => '0');
+  -- Debug outputs
+        dbgRegAOut, dbgRegBOut: out word_t := (others => '0')
       );
 end entity;
 
@@ -76,7 +81,7 @@ begin
 
   MEM : entity work.Memory port Map
   (
-    Addr => ALUout(5 downto 0),
+    Addr => aluOut(5 downto 0),
     DataIn => busB,
     DataOut => dataOut,
     CLK => CLK,
@@ -84,12 +89,15 @@ begin
     WE => WrEn
   );
 
-  IMM_EXT : entity work.sign_extender generic map(n => 32)
+  IMM_EXT : entity work.sign_extender generic map(n => 8)
   port Map
   (
     E => Imm,
     S => immOut
   );
+
+  dbgRegAOut <= busA;
+  dbgRegBOut <= busB;
 
 end architecture;
 
