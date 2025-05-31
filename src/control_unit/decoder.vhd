@@ -38,9 +38,9 @@ begin
                 current_instruction <= ADDi;
             when X"E35" => -- CMP
                 current_instruction <= CMP;
-            when X"E41" => -- LDR
+            when X"E61" => -- LDR
                 current_instruction <= LDR;
-            when X"E40" => -- STR
+            when X"E60" => -- STR
                 current_instruction <= STR;
             when X"EAF" => -- BAL
                 current_instruction <= BAL;
@@ -105,7 +105,7 @@ begin
                 nPCSel <= '1';
 
             when BLT =>
-                if PSR(31) = '1' then -- on check le flag N
+                if PSR(3) = '1' then -- on check le flag N (NZCV)
                     nPCSel <= '1';
                 end if;
 

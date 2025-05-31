@@ -5,7 +5,8 @@ use work.types.all;  -- Import all definitions from the package
 
 entity processor is
     port (
-      CLK, RST : in std_logic
+      CLK, RST : in std_logic;
+      dbgInstruction : out word_t
     );
 end entity;
 
@@ -24,6 +25,7 @@ begin
   Rm <= instruction(3 downto 0);
   Imm <= instruction(7 downto 0);
   offset <= instruction(23 downto 0);
+  dbgInstruction <= instruction;
 
   INSTR_MANAGER : entity work.instruction_manager
   port map (

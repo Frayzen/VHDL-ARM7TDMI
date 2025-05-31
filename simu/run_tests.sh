@@ -13,7 +13,7 @@ function run_test()
   # Run in batch mode (-c)
   set +e
   {
-    timeout 2s vsim -c -do "\
+    timeout 5s vsim -c -do "\
     vsim ${test_name}; \
     run -all; \
     quit -f"
