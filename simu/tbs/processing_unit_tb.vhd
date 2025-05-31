@@ -10,7 +10,7 @@ architecture Testbench of Processing_Unit_TB is
     -- Test signals
     signal OP : op_t;
     signal RA, RB, RW : reg_addr_t;
-    signal CLK, RST, WrEn, RegWr, immCom, resCom : std_logic := '0';
+    signal CLK, RST, MemWr, RegWr, immCom, resCom : std_logic := '0';
     signal FLAGS : flags_t;
     signal Imm : imm_t;
     signal dbgRegAOut, dbgRegBOut : word_t;
@@ -41,7 +41,7 @@ begin
             RW => RW,
             CLK => CLK,
             RST => RST,
-            WrEn => WrEn,
+            MemWr => MemWr,
             RegWr => RegWr,
             immCom => immCom,
             resCom => resCom,
@@ -168,9 +168,9 @@ begin
         RA <= to_reg_addr(5);  -- Address (5)
         RB <= to_reg_addr(3);  -- Data (15)
         resCom <= '1';         -- Memory operation
-        WrEn <= '1';
+        MemWr <= '1';
         wait for CLK_PERIOD;
-        WrEn <= '0';
+        MemWr <= '0';
         resCom <= '0';
         wait for CLK_PERIOD;
         

@@ -27,6 +27,9 @@ architecture Behaviour of Memory is
     for i in 63 downto 0 loop
       result(i) := (others=>'0');
     end loop;
+    for i in 42 downto 32 loop
+      result(i) := STD_LOGIC_VECTOR(to_unsigned(integer(i), 32));
+    end loop;
     return result;
   end init_data;
 

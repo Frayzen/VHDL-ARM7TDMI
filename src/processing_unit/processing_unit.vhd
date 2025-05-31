@@ -19,7 +19,7 @@ use work.types.all;  -- Import all definitions from the package
 -- RW: Bus d’adresses en écriture sur 4 bits
 -- CLK: Horloge,
 -- RST : reset asynchrone (actif à l’état haut) non représenté sur le schéma
--- WrEn: Memory Write Enable sur 1 bit
+-- MemWr: Memory Write Enable sur 1 bit
 -- RegWr: Register Write Enable sur 1 bit
 -- immCom: weather the ALU is considering the immediate value (1) or not (0)
 -- resCom: weather the ALU result is a pointer (1) or raw value (0)
@@ -29,7 +29,7 @@ entity Processing_Unit is
   port (
         OP : in op_t := (others => '0');
         RA, RB, RW: in reg_addr_t := (others => '0');
-        CLK, RST, WrEn, RegWr, immCom, resCom: in Std_logic := '0'; 
+        CLK, RST, MemWr, RegWr, immCom, resCom: in Std_logic := '0'; 
         FLAGS : out flags_t := (others => '0');
         Imm : in imm_t := (others => '0');
   -- Debug outputs
@@ -86,7 +86,7 @@ begin
     DataOut => dataOut,
     CLK => CLK,
     RST => RST,
-    WE => WrEn
+    WE => MemWr
   );
 
   IMM_EXT : entity work.sign_extender generic map(n => 8)
