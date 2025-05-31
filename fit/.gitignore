@@ -1,3 +1,7 @@
 *
 !*.qsf
+!*.sdc
+!*.qpf
+!*.qdf
 !.gitignore
+!*.v

@@ -5,7 +5,8 @@ use work.types.all;  -- Import all definitions from the package
 
 entity top_level is
     port (
-      CLK, RST : in std_logic;
+      CLK : in std_logic;
+      KEY			 	:  IN  STD_LOGIC_VECTOR(1 DOWNTO 0);
       SW 				:  IN  STD_LOGIC_VECTOR(9 DOWNTO 0);
       HEX0 		 	:  OUT  STD_LOGIC_VECTOR(0 TO 6);
       HEX1 			:  OUT  STD_LOGIC_VECTOR(0 TO 6);
@@ -16,7 +17,10 @@ end entity;
 
 architecture rtl of top_level is
   signal RegDisp : word_t;
+  signal RST : std_logic;
 begin
+
+  RST <= not KEY(0);
 
   REG_PSR : entity work.processor
   port map (
