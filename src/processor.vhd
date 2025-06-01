@@ -13,12 +13,13 @@ end entity;
 
 architecture rtl of processor is
   signal offset : pc_offset_t;
-  signal instruction, psrOut, RegBOut : word_t;
+  signal instruction, psrOut, RegBOut, VICPC : word_t;
   signal muxOut, Rm, Rd, Rn : reg_addr_t;
   signal Imm : imm_t;
   signal flags : flags_t;
   signal ALUCtr      : std_logic_vector(2 downto 0);
-  signal nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff: std_logic;
+  signal IRQ, IRQ0, IRQ1, IRQServ : std_logic;
+  signal nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff, IRQEnd: std_logic;
 begin
 
   Rn <= instruction(19 downto 16);
@@ -28,14 +29,32 @@ begin
   offset <= instruction(23 downto 0);
   dbgInstruction <= instruction;
 
+  VIC : entity work.VIC 
+  port map (
+    CLK => CLK,
+    RST => RST,
+    IRQServ => IRQServ,
+    IRQ0 => IRQ0,
+    IRQ1 => IRQ1,
+    IRQ => IRQ,
+    VICPC => VICPC
+  )
+
+
   INSTR_MANAGER : entity work.instruction_manager
   port map (
     CLK => CLK, 
     RST => RST,
     offset => offset,
     nPCsel => nPCsel,
-    instruction => instruction
+    instruction => instruction,
+    IRQ => IRQ,
+    IRQEnd => IRQEnd,
+    VICPC => VICPC,
+    IRQServ => IRQServ
   );
+  
+  
 
   DECODER : entity work.decoder
   port map (
@@ -49,8 +68,8 @@ begin
     RegSel => RegSel,
     ALUCtr => ALUCtr,
     nPCSel => nPCSel,
-    RegAff => RegAff
-
+    RegAff => RegAff,
+    IRQEnd => IRQEnd
   );
   
   RB_MUX : entity work.mux generic map(n => 4)

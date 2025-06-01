@@ -6,7 +6,7 @@ entity VIC is
     port(
         CLK      : in std_logic;
         RESET    : in std_logic;
-        IRQ_SERV : in std_logic; 
+        IRQServ : in std_logic; 
         IRQ0     : in std_logic;
         IRQ1     : in std_logic;
         IRQ      : out std_logic;
@@ -38,7 +38,7 @@ begin
             end if;
             
             -- Acquittement
-            if IRQ_SERV = '1' then
+            if IRQServ = '1' then
                 if IRQ0_memo = '1' then
                     IRQ0_memo <= '0';
                 elsif IRQ1_memo = '1' then
