@@ -1,0 +1,88 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity VIC_tb is
+end VIC_tb;
+
+architecture RTL of VIC_tb is
+    
+    signal CLK      : std_logic := '0';
+    signal RESET    : std_logic := '1';
+    signal IRQ_SERV : std_logic := '0';
+    signal IRQ0     : std_logic := '0';
+    signal IRQ1     : std_logic := '0';
+    signal IRQ      : std_logic;
+    signal VICPC    : std_logic_vector(31 downto 0);
+    
+    signal finished : std_logic := '0';
+    constant CLK_PERIOD : time := 10 ns;
+begin
+    
+    clk <= not clk after CLK_PERIOD / 2 when finished /= '1' else '0';
+    
+    process
+        procedure run_test(
+            reset_val    : in std_logic;
+            irq0_val     : in std_logic;
+            irq1_val     : in std_logic;
+            irq_serv_val : in std_logic;
+            exp_irq      : in std_logic;
+            exp_vicpc    : in std_logic_vector(31 downto 0)
+        ) is
+        begin
+            RESET    <= reset_val;
+            IRQ0     <= irq0_val;
+            IRQ1     <= irq1_val;
+            IRQ_SERV <= irq_serv_val;
+            wait for CLK_PERIOD * 2;
+
+            assert IRQ = exp_irq report "IRQ is not as expected" severity error;
+            assert VICPC = exp_vicpc report "VICPC is not as expected" severity error;
+        end procedure;
+    begin
+        -- reset_val, irq0_val, irq1_val, irq_serv_val, exp_irq, exp_vicpc
+        -- Initial reset
+        RESET <= '1';
+        wait for CLK_PERIOD;
+
+        RESET <= '0';
+        wait for CLK_PERIOD;
+        
+        -- Test IRQ0
+        
+        run_test('0', '1', '0', '0', '1', X"00000009");
+        run_test('0', '0', '0', '1', '0', X"00000000");
+        
+        -- Test IRQ1
+
+        run_test('0', '0', '1', '0', '1', X"00000015");
+        run_test('0', '0', '0', '1', '0', X"00000000");
+        
+        -- Priorite
+        run_test('0', '1', '1', '0', '1', X"00000009");
+        run_test('0', '0', '0', '1', '1', X"00000015");
+        
+        -- Sans acquittement
+
+        run_test('0', '1', '0', '0', '1', X"00000009");
+        -- L'etat ne change pas
+        run_test('0', '0', '0', '0', '1', X"00000009");
+        -- Acquittement recu, on reset
+        run_test('0', '0', '0', '1', '0', X"00000000");
+        
+        
+        finished <= '1';
+        wait;
+    end process;
+
+    uut: entity work.VIC
+        port map(
+            CLK      => CLK,
+            RESET    => RESET,
+            IRQ_SERV => IRQ_SERV,
+            IRQ0     => IRQ0,
+            IRQ1     => IRQ1,
+            IRQ      => IRQ,
+            VICPC    => VICPC
+        );
+end RTL;

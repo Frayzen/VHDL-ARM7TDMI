@@ -10,17 +10,6 @@ end PSR_TB;
 architecture RTL of PSR_TB is
 -- -----------------------------------
 
-    component PSR
-        port (
-            DATAIN   : in  std_logic_vector(31 downto 0);
-            RST      : in  std_logic;
-            CLK      : in  std_logic;
-            WE       : in  std_logic;
-            DATAOUT  : out std_logic_vector(31 downto 0)
-        );
-    end component;
-
-
     signal DATAIN   : std_logic_vector(31 downto 0) := (others => '0');
     signal RST      : std_logic := '0';
     signal CLK      : std_logic := '0';

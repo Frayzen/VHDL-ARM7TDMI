@@ -9,17 +9,6 @@ end ALU_TB;
 -- -----------------------------------
 architecture RTL of ALU_TB is
 -- -----------------------------------
-
-    component ALU
-        port (
-            OP    : in  std_logic_vector(2 downto 0);
-            A     : in  std_logic_vector(31 downto 0);
-            B     : in  std_logic_vector(31 downto 0);
-            S     : out std_logic_vector(31 downto 0);
-            FLAGS : out std_logic_vector(3 downto 0)
-        );
-    end component;
-
     signal OP    : std_logic_vector(2 downto 0) := (others => '0');
     signal A     : std_logic_vector(31 downto 0) := (others => '0');
     signal B     : std_logic_vector(31 downto 0) := (others => '0');
