@@ -33,17 +33,17 @@ entity Processing_Unit is
         FLAGS : out flags_t := (others => '0');
         Imm : in imm_t := (others => '0');
   -- Debug outputs
-        RegAOut, RegBOut: out word_t := (others => '0')
+        RegAOut, RegBOut, busWOut : out word_t := (others => '0')
       );
 end entity;
 
 architecture Behaviour of Processing_Unit is
-  signal busA, busB, aluOut, dataOut, busW, muxOut, immOut : word_t;
+  signal busA, busB, aluOut, dataOut, muxOut, immOut : word_t;
 begin
 
   REGS : entity work.Registers port Map
   (
-    W => busW,
+    W => busWOut,
     RA => RA,
     RB => RB,
     RW => RW,
@@ -76,7 +76,7 @@ begin
     A => aluOut,
     B => dataOut,
     COM => resCom,
-    S => busW
+    S => busWOut
   );
 
   MEM : entity work.Memory port Map

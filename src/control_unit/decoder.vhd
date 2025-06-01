@@ -17,14 +17,13 @@ entity decoder is
         WrSrc       : out std_logic;
         RegSel      : out std_logic;
         RegAff      : out std_logic;
-        IRQEnd      : out std_logic
+        IRQEnd      : out std_logic;
+        current_instruction : out enum_instruction
     );
 end entity;
 
 architecture rtl of decoder is
 
-    type enum_instruction is (MOV, ADDi, ADDr, CMP, LDR, STR, BAL, BLT, NOP, BX);
-    signal current_instruction : enum_instruction;
 begin
 
     process(instruction)

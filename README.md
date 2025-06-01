@@ -14,6 +14,8 @@ This repository contains a complete implementation of a 32-bit single-cycle MIPS
 - Data memory
 - Program counter
 
+![Processor Degsign](./processor_design.png)
+
 ## Part 3 table
 
 | INSTRUCTION | nPCSel | RegWr | ALUSrc | ALUCtr | PSREn | MemWr | WrSrc | RegSel | RegAff |

@@ -14,13 +14,16 @@ end entity;
 
 architecture rtl of processor is
   signal offset : pc_offset_t;
-  signal instruction, psrOut, RegBOut, VICPC : word_t;
-  signal muxOut, Rm, Rd, Rn : reg_addr_t;
+  signal instruction, psrOut, RegBOut, busWOut, VICPC : word_t;
+  signal Rm, Rd, Rn, muxOut : reg_addr_t;
   signal Imm : imm_t;
   signal flags : flags_t;
   signal ALUCtr      : std_logic_vector(2 downto 0);
   signal IRQ, IRQ0, IRQ1, IRQServ : std_logic;
   signal nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff, IRQEnd: std_logic;
+  signal UART_CONF : uart_byte_t;
+  signal UART_GO : std_logic;
+  signal current_instruction : enum_instruction;
 begin
 
   Rn <= instruction(19 downto 16);
@@ -29,6 +32,11 @@ begin
   Imm <= instruction(7 downto 0);
   offset <= instruction(23 downto 0);
   dbgInstruction <= instruction;
+
+  with RegBOut select
+        UART_CONF <= busWOut(7 downto 0) when x"00000040",
+        (others => '0') when others;
+  UART_GO <= '1' when current_instruction = STR and RegBOut = x"00000040" else '0';
 
   VIC : entity work.vector_int_controller 
   port map (
@@ -70,7 +78,8 @@ begin
     ALUCtr => ALUCtr,
     nPCSel => nPCSel,
     RegAff => RegAff,
-    IRQEnd => IRQEnd
+    IRQEnd => IRQEnd,
+    current_instruction => current_instruction
   );
   
   RB_MUX : entity work.mux generic map(n => 4)
@@ -95,7 +104,8 @@ begin
     flags => flags,
     immCom => ALUSrc,
     resCom => WrSrc,
-    RegBOut => RegBOut
+    RegBOut => RegBOut,
+    busWOut => busWOut
   );
 
   REG_PSR : entity work.PSR
@@ -120,9 +130,9 @@ begin
   port map (
       RST => RST,
       CLK => CLK,
-      GO => GO,
+      GO => UART_GO,
       GPIO => GPIO,
-      UART_Conf => 
+      UART_Conf => UART_CONF
   );
 
 end architecture;

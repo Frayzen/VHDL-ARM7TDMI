@@ -14,4 +14,5 @@ package types is
     subtype imm_t is std_logic_vector(7 downto 0); -- Immediate value type
     subtype pc_offset_t is std_logic_vector(23 downto 0); -- PC offset type
     type RAM64x32 is array (0 to 63) of std_logic_vector (31 downto 0);
+    type enum_instruction is (MOV, ADDi, ADDr, CMP, LDR, STR, BAL, BLT, NOP, BX);
 end package types;
