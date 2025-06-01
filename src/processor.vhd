@@ -6,6 +6,7 @@ use work.types.all;  -- Import all definitions from the package
 entity processor is
     port (
       CLK, RST : in std_logic;
+      GPIO      : inout std_logic_vector(35 downto 0);
       RegDisp : out word_t;
       dbgInstruction : out word_t
     );
@@ -113,6 +114,15 @@ begin
     WE => RegAff,
     DATAIN => RegBOut,
     DATAOUT => RegDisp
+  );
+
+  UART_DEV : entity work.UART_DEV
+  port map (
+      RST => RST,
+      CLK => CLK,
+      GO => GO,
+      GPIO => GPIO,
+      UART_Conf => 
   );
 
 end architecture;

@@ -1,14 +1,15 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use work.types.all;  -- Import all definitions from the package
 
 entity decoder_tb is
 end decoder_tb;
 
 architecture RTL of decoder_tb is
 
-    signal instruction : std_logic_vector(31 downto 0);
-    signal PSR         : std_logic_vector(31 downto 0) := (others => '0');
+    signal instruction : word_t;
+    signal PSR         : word_t := (others => '0');
 
     signal nPCSel  : std_logic;
     signal RegWr   : std_logic;
@@ -25,8 +26,8 @@ begin
 
     process
         procedure run_test(
-            instr_val     : in std_logic_vector(31 downto 0);
-            psr_val       : in std_logic_vector(31 downto 0);
+            instr_val     : in word_t;
+            psr_val       : in word_t;
             expected_nPCSel  : in std_logic;
             expected_RegWr : in std_logic;
             expected_ALUSrc : in std_logic;

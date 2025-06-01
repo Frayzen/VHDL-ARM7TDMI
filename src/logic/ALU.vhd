@@ -29,7 +29,7 @@ end entity ALU;
 architecture RTL of ALU is
 -- -----------------------------------
 
-    signal result     : std_logic_vector(31 downto 0);
+    signal result     : word_t;
 
     signal carry : std_logic;  -- C (FLAGS(1))
     signal overflow   : std_logic;  -- V (FLAGS(0))
@@ -37,7 +37,7 @@ begin
     process(OP, A, B)
         variable temp_add : unsigned(32 downto 0); 
         variable temp_sub : unsigned(32 downto 0);
-        variable temp_result : std_logic_vector(31 downto 0);
+        variable temp_result : word_t;
     begin
         case OP is
             -- ADD (000)

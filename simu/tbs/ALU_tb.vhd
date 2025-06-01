@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use work.types.all;  -- Import all definitions from the package
 
 entity ALU_TB is
 end ALU_TB;
@@ -9,20 +10,21 @@ end ALU_TB;
 -- -----------------------------------
 architecture RTL of ALU_TB is
 -- -----------------------------------
-    signal OP    : std_logic_vector(2 downto 0) := (others => '0');
-    signal A     : std_logic_vector(31 downto 0) := (others => '0');
-    signal B     : std_logic_vector(31 downto 0) := (others => '0');
-    signal S     : std_logic_vector(31 downto 0);
-    signal FLAGS : std_logic_vector(3 downto 0);
+    signal OP    : op_t := (others => '0');
+    signal A     : word_t := (others => '0');
+    signal B     : word_t := (others => '0');
+    signal S     : word_t;
+    signal FLAGS : flags_t;
     
 begin
     proc: process
         procedure run_test(
-            op_code  : in std_logic_vector(2 downto 0);
-            a_val    : in std_logic_vector(31 downto 0);
-            b_val    : in std_logic_vector(31 downto 0);
-            expected : in std_logic_vector(31 downto 0);
-            expected_flags: in std_logic_vector(3 downto 0)) is
+            op_code  : in op_t;
+            a_val    : in word_t;
+            b_val    : in word_t;
+            expected : in word_t;
+            expected_flags: in flags_t
+        ) is
         begin
             OP <= op_code;
             A  <= a_val;

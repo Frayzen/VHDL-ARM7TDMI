@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use work.types.all;  -- Import all definitions from the package
 
 entity vector_int_controller is
     port(
@@ -10,7 +11,7 @@ entity vector_int_controller is
         IRQ0     : in std_logic;
         IRQ1     : in std_logic;
         IRQ      : out std_logic;
-        VICPC    : out std_logic_vector(31 downto 0)
+        VICPC    : out word_t
     );
 end entity vector_int_controller;
 

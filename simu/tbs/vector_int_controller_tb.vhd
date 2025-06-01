@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
+use work.types.all;  -- Import all definitions from the package
 
 entity vector_int_controller_tb is
 end vector_int_controller_tb;
@@ -12,7 +13,7 @@ architecture RTL of vector_int_controller_tb is
     signal IRQ0     : std_logic := '0';
     signal IRQ1     : std_logic := '0';
     signal IRQ      : std_logic;
-    signal VICPC    : std_logic_vector(31 downto 0);
+    signal VICPC    : word_t;
     
     signal finished : std_logic := '0';
     constant CLK_PERIOD : time := 10 ns;
