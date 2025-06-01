@@ -21,31 +21,7 @@ end entity;
 
 architecture impl of instruction_manager is
     signal pc : word_t;
-    signal lr : word_t;
-    signal irq_handling : std_logic := '0';
 begin
-  -- interrupts
-  process(CLK, RST)
-    begin
-        if RST = '1' then
-            lr <= (others => '0');
-            irq_handling <= '0';
-            IRQServ <= '0';
-        elsif rising_edge(CLK) then
-            IRQServ <= '0';
-            
-            if IRQ = '1' and irq_handling = '0' then
-                lr <= pc;
-  		--pc <= VICPC;
-                irq_handling <= '1';
-                IRQServ <= '1';
-            elsif IRQEnd = '1' then
-                --pc <= std_logic_vector(unsigned(lr) + 1);
-                irq_handling <= '0';
-            end if;
-        end if;
-    end process;
-
 
 
 
@@ -55,7 +31,11 @@ begin
     nPCsel => nPCsel,
     pc => pc,
     CLK => CLK,
-    RST => RST
+    RST => RST,
+    IRQ => IRQ,
+    IRQEnd => IRQEnd,
+    VICPC => VICPC,
+    IRQServ => IRQServ
    );
 
   INSTRUCTION_MEM : entity work.instruction_memory
