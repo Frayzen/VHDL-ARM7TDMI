@@ -38,7 +38,7 @@ begin
     IRQ1 => IRQ1,
     IRQ => IRQ,
     VICPC => VICPC
-  )
+  );
 
 
   INSTR_MANAGER : entity work.instruction_manager

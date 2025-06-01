@@ -8,9 +8,9 @@ end entity;
 
 architecture Bench of pc_manager_tb is
     -- Component signals
-    signal PC : word_t;
+    signal PC, VICPC : word_t;
     signal offset : pc_offset_t;
-    signal nPCSel, CLK, RST : std_logic := '0';
+    signal nPCSel, CLK, RST, IRQ, IRQEnd, IRQServ : std_logic := '0';
     constant CLK_PERIOD : time := 10 ns;
     signal FINISHED : std_logic := '0';
 begin
@@ -21,7 +21,11 @@ begin
       offset => offset,
       nPCsel => nPCsel,
       CLK => CLK,
-      RST => RST
+      RST => RST,
+      IRQ => IRQ,
+      IRQEnd => IRQEnd,
+      IRQServ => IRQServ,
+      VICPC => VICPC
     );
 
     CLK <= not CLK after CLK_PERIOD / 2 when FINISHED /= '1' else '0';
@@ -29,9 +33,11 @@ begin
     -- Stimulus process
     stim_proc: process
     begin
-        RST <= '1';
+	VICPC <= X"00000000";
+	RST <= '1';
         wait for CLK_PERIOD;
         RST <= '0';
+
         nPCSel <= '0';
         offset <= x"000004";
         wait for CLK_PERIOD;
