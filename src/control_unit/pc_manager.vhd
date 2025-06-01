@@ -8,6 +8,10 @@ use work.types.all;  -- Import all definitions from the package
 -- nPCsel: select either to increment PC by 1 (0) or by OFFSET (1)
 -- CLK: clock
 -- RST: reset pc to 0
+-- IRQ: Interrupt signal
+-- IRQEnd: End of interrupt
+-- VICPC: Subprogram address
+-- IRQServ: Interrupt acquittal signal
 entity pc_manager is
     port (
       pc : inout word_t;
