@@ -19,6 +19,8 @@ architecture RTL of decoder_tb is
     signal WrSrc   : std_logic;
     signal RegSel  : std_logic;
     signal RegAff  : std_logic;
+    signal IRQEnd  : std_logic;
+;
 
 begin
 
@@ -34,7 +36,8 @@ begin
             expected_MemWr : in std_logic;
             expected_WrSrc  : in std_logic;
             expected_RegSel : in std_logic;
-            expected_RegAff : in std_logic
+            expected_RegAff : in std_logic;
+            expected_IRQEnd : in std_logic
         ) is
         begin
             instruction <= instr_val;
@@ -50,40 +53,41 @@ begin
             assert WrSrc  = expected_WrSrc  report "WrSrc failed" severity failure;
             assert RegSel = expected_RegSel report "RegSel failed" severity failure;
             assert RegAff = expected_RegAff report "RegAff failed" severity failure;
+            assert IRQEnd = expected_IRQEnd report "IRQEnd failed" severity failure;
 
             report "Test passed" severity note;
         end procedure;
     begin
 
         -- ADDi R2, R2, #1
-        run_test(X"E2883032", (others => '0'), '0', '1', '1', "000", '0', '0', '0', '0', '0');
+        run_test(X"E2883032", (others => '0'), '0', '1', '1', "000", '0', '0', '0', '0', '0', '0');
 
         -- ADDr R2, R2, R0
-        run_test(X"E0812005", (others => '0'), '0', '1', '0', "000", '0', '0', '0', '0', '0');
+        run_test(X"E0812005", (others => '0'), '0', '1', '0', "000", '0', '0', '0', '0', '0', '0');
 
         -- BAL
-        run_test(X"EAFFFFF7", (others => '0'), '1', '0', '0', "000", '0', '0', '0', '0', '0');
+        run_test(X"EAFFFFF7", (others => '0'), '1', '0', '0', "000", '0', '0', '0', '0', '0', '0');
 
         -- BLT avec N=1
-        run_test(X"BAFFFFFB", X"00000008", '1', '0', '0', "000", '0', '0', '0', '0', '0');
+        run_test(X"BAFFFFFB", X"00000008", '1', '0', '0', "000", '0', '0', '0', '0', '0', '0');
 
         -- BLT avec N=0
-        run_test(X"BAFFFFFB", (others => '0'), '0', '0', '0', "000", '0', '0', '0', '0', '0');
+        run_test(X"BAFFFFFB", (others => '0'), '0', '0', '0', "000", '0', '0', '0', '0', '0', '0');
 
         -- CMP R2, #0x20
-        run_test(X"E3520020", (others => '0'), '0', '0', '1', "010", '1', '0', '0', '0', '0');        
+        run_test(X"E3520020", (others => '0'), '0', '0', '1', "010", '1', '0', '0', '0', '0', '0');        
         
         -- LDR R0, [R1]
-        run_test(X"E6121000", (others => '0'), '0', '1', '1', "000", '0', '0', '1', '1', '0');
+        run_test(X"E6121000", (others => '0'), '0', '1', '1', "000", '0', '0', '1', '1', '0', '0');
 
         -- MOV R1, #0x20
-        run_test(X"E3A01020", (others => '0'), '0', '1', '1', "001", '0', '0', '0', '0', '0');
+        run_test(X"E3A01020", (others => '0'), '0', '1', '1', "001", '0', '0', '0', '0', '0', '0');
 
         -- STR R0, [R1]
-        run_test(X"E6012000", (others => '0'), '0', '0', '1', "000", '0', '1', '0', '1', '1');
+        run_test(X"E6012000", (others => '0'), '0', '0', '1', "000", '0', '1', '0', '1', '1', '0');
 
         -- NOP
-        run_test(X"FFFFFFFF", (others => '0'), '0', '0', '0', "000", '0', '0', '0', '0', '0');
+        run_test(X"FFFFFFFF", (others => '0'), '0', '0', '0', "000", '0', '0', '0', '0', '0', '0');
 
         wait;
     end process;
@@ -100,7 +104,9 @@ begin
             MemWr       => MemWr,
             WrSrc       => WrSrc,
             RegSel      => RegSel,
-            RegAff      => RegAff
+            RegAff      => RegAff,
+            IRQEnd      => IRQEnd
+
         );
 
 end RTL;

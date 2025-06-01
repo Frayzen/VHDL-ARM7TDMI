@@ -16,13 +16,14 @@ entity decoder is
         MemWr       : out std_logic;
         WrSrc       : out std_logic;
         RegSel      : out std_logic;
-        RegAff      : out std_logic
+        RegAff      : out std_logic;
+        IRQEnd      : out std_logic
     );
 end entity;
 
 architecture rtl of decoder is
 
-    type enum_instruction is (MOV, ADDi, ADDr, CMP, LDR, STR, BAL, BLT, NOP);
+    type enum_instruction is (MOV, ADDi, ADDr, CMP, LDR, STR, BAL, BLT, NOP, BX);
     signal current_instruction : enum_instruction;
 begin
 
@@ -46,6 +47,8 @@ begin
                 current_instruction <= BAL;
             when X"BAF" => -- BLT
                 current_instruction <= BLT;
+            when X"EB0" =>
+                current_instruction <= BX;
             when others => 
                 current_instruction <= NOP;
         end case;
@@ -109,6 +112,8 @@ begin
                     nPCSel <= '1';
                 end if;
 
+            when BX =>
+                IRQEnd <= '1';
             when others =>
                 null;
 
