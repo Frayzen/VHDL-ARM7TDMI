@@ -47,7 +47,7 @@ begin
                 current_instruction <= BAL;
             when X"BAF" => -- BLT
                 current_instruction <= BLT;
-            when X"EB0" =>
+            when X"EB0" => -- BX
                 current_instruction <= BX;
             when others => 
                 current_instruction <= NOP;

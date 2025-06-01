@@ -25,13 +25,9 @@ end entity;
 
 architecture impl of instruction_manager is
     signal pc : word_t;
-    signal lr : word_t;
-    signal irq_handler : std_logic := '0';
 begin
 
-
-
-  PC_MANANGER : entity work.pc_manager
+  PC_MANAGER : entity work.pc_manager
   port map (
     offset => offset,
     nPCsel => nPCsel,

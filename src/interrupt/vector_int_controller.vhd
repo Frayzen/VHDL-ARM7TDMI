@@ -2,7 +2,7 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity VIC is
+entity vector_int_controller is
     port(
         CLK      : in std_logic;
         RST    : in std_logic;
@@ -12,10 +12,9 @@ entity VIC is
         IRQ      : out std_logic;
         VICPC    : out std_logic_vector(31 downto 0)
     );
-end entity VIC;
+end entity vector_int_controller;
 
-
-architecture RTL of VIC is
+architecture RTL of vector_int_controller is
     signal IRQ0_memo, IRQ1_memo : std_logic := '0';
     signal IRQ_internal : std_logic := '0'; -- Signal intermediaire
 begin

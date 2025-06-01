@@ -1,10 +1,10 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity VIC_tb is
-end VIC_tb;
+entity vector_int_controller_tb is
+end vector_int_controller_tb;
 
-architecture RTL of VIC_tb is
+architecture RTL of vector_int_controller_tb is
     
     signal CLK      : std_logic := '0';
     signal RST    : std_logic := '1';
@@ -75,7 +75,7 @@ begin
         wait;
     end process;
 
-    uut: entity work.VIC
+    uut: entity work.vector_int_controller
         port map(
             CLK      => CLK,
             RST    => RST,

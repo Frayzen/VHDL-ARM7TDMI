@@ -29,7 +29,7 @@ begin
   offset <= instruction(23 downto 0);
   dbgInstruction <= instruction;
 
-  VIC : entity work.VIC 
+  VIC : entity work.vector_int_controller 
   port map (
     CLK => CLK,
     RST => RST,
