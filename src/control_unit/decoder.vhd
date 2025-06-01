@@ -67,7 +67,7 @@ begin
         WrSrc  <= '0';
         RegSel <= '0';
         RegAff <= '0';
-
+	IRQEnd <= '0';
         case current_instruction is
 
             when MOV =>

@@ -5,7 +5,7 @@ use IEEE.numeric_std.all;
 entity VIC is
     port(
         CLK      : in std_logic;
-        RESET    : in std_logic;
+        RST    : in std_logic;
         IRQServ : in std_logic; 
         IRQ0     : in std_logic;
         IRQ1     : in std_logic;
@@ -19,9 +19,9 @@ architecture RTL of VIC is
     signal IRQ0_memo, IRQ1_memo : std_logic := '0';
     signal IRQ_internal : std_logic := '0'; -- Signal intermediaire
 begin
-    process(CLK, RESET)
+    process(CLK, RST)
     begin
-        if RESET = '1' then
+        if RST = '1' then
             IRQ0_memo <= '0';
             IRQ1_memo <= '0';
             IRQ_internal <= '0';

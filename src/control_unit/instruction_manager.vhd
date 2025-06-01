@@ -15,29 +15,28 @@ entity instruction_manager is
       nPCsel, CLK, RST : in std_logic;
       IRQ, IRQEnd : in std_logic;
       VICPC : in word_t;
-      IRQServ : out std_logic;
+      IRQServ : out std_logic
     );
 end entity;
 
 architecture impl of instruction_manager is
     signal pc : word_t;
     signal lr : word_t;
-    signal irq_handler : std_logic := '0';
+    signal irq_handling : std_logic := '0';
 begin
   -- interrupts
   process(CLK, RST)
     begin
         if RST = '1' then
-            pc <= (others => '0');
             lr <= (others => '0');
             irq_handling <= '0';
             IRQServ <= '0';
         elsif rising_edge(CLK) then
             IRQServ <= '0';
             
-            if IRQ = '1' and irq_handling = '0' then
+            if IRQ = '0' and irq_handling = '0' then
                 lr <= pc;
-                pc <= VICPC;
+  		pc <= VICPC;
                 irq_handling <= '1';
                 IRQServ <= '1';
             elsif IRQEnd = '1' then

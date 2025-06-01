@@ -20,7 +20,6 @@ architecture RTL of decoder_tb is
     signal RegSel  : std_logic;
     signal RegAff  : std_logic;
     signal IRQEnd  : std_logic;
-;
 
 begin
 

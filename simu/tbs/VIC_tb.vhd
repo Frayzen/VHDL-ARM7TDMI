@@ -7,8 +7,8 @@ end VIC_tb;
 architecture RTL of VIC_tb is
     
     signal CLK      : std_logic := '0';
-    signal RESET    : std_logic := '1';
-    signal IRQ_SERV : std_logic := '0';
+    signal RST    : std_logic := '1';
+    signal IRQServ : std_logic := '0';
     signal IRQ0     : std_logic := '0';
     signal IRQ1     : std_logic := '0';
     signal IRQ      : std_logic;
@@ -30,10 +30,10 @@ begin
             exp_vicpc    : in std_logic_vector(31 downto 0)
         ) is
         begin
-            RESET    <= reset_val;
+            RST    <= reset_val;
             IRQ0     <= irq0_val;
             IRQ1     <= irq1_val;
-            IRQ_SERV <= irq_serv_val;
+            IRQServ <= irq_serv_val;
             wait for CLK_PERIOD * 2;
 
             assert IRQ = exp_irq report "IRQ is not as expected" severity error;
@@ -42,10 +42,10 @@ begin
     begin
         -- reset_val, irq0_val, irq1_val, irq_serv_val, exp_irq, exp_vicpc
         -- Initial reset
-        RESET <= '1';
+        RST <= '1';
         wait for CLK_PERIOD;
 
-        RESET <= '0';
+        RST <= '0';
         wait for CLK_PERIOD;
         
         -- Test IRQ0
@@ -78,8 +78,8 @@ begin
     uut: entity work.VIC
         port map(
             CLK      => CLK,
-            RESET    => RESET,
-            IRQ_SERV => IRQ_SERV,
+            RST    => RST,
+            IRQServ => IRQServ,
             IRQ0     => IRQ0,
             IRQ1     => IRQ1,
             IRQ      => IRQ,
