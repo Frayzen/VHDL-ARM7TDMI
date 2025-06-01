@@ -34,13 +34,13 @@ begin
         elsif rising_edge(CLK) then
             IRQServ <= '0';
             
-            if IRQ = '0' and irq_handling = '0' then
+            if IRQ = '1' and irq_handling = '0' then
                 lr <= pc;
-  		pc <= VICPC;
+  		--pc <= VICPC;
                 irq_handling <= '1';
                 IRQServ <= '1';
             elsif IRQEnd = '1' then
-                pc <= std_logic_vector(unsigned(lr) + 1);
+                --pc <= std_logic_vector(unsigned(lr) + 1);
                 irq_handling <= '0';
             end if;
         end if;
