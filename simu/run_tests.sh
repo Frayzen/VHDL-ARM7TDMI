@@ -1,7 +1,6 @@
 #!/bin/sh
 
-cd $(dirname $0)
-. ./compile.sh
+. $(dirname $0)/compile.sh
 
 print "${GRAY}[Running tests]"
 
