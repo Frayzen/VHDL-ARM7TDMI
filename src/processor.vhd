@@ -5,7 +5,7 @@ use work.types.all;  -- Import all definitions from the package
 
 entity processor is
     port (
-      CLK, RST : in std_logic;
+      CLK, RST, IRQ0 : in std_logic;
       GPIO      : inout std_logic_vector(35 downto 0);
       RegDisp : out word_t;
       dbgInstruction : out word_t
@@ -19,13 +19,34 @@ architecture rtl of processor is
   signal Imm : imm_t;
   signal flags : flags_t;
   signal ALUCtr      : std_logic_vector(2 downto 0);
-  signal IRQ, IRQ0, IRQ1, IRQServ : std_logic;
+  signal IRQ, IRQ1, IRQServ : std_logic;
   signal nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff, IRQEnd: std_logic;
   signal UART_CONF : uart_byte_t;
   signal UART_GO : std_logic;
   signal current_instruction : enum_instruction;
+  signal IRQ0_front : std_logic := '0';
+  signal IRQ0_debouncer : unsigned(30 downto 0);
 begin
-
+  
+  process (clk, rst)
+  begin
+    if rst = '1' then
+      IRQ0_front <= '0';
+    elsif rising_edge(clk) then
+      if IRQ0 = '1' then
+        if IRQ0_debouncer = 0 then
+          IRQ0_front <= '1'; 
+        else
+          IRQ0_front <= '0'; 
+        end if;
+        IRQ0_debouncer <= IRQ0_debouncer + 1;
+      else
+        IRQ0_front <= '0'; 
+        IRQ0_debouncer <= (others => '0');
+      end if;
+    end if;
+  end process;
+  
   Rn <= instruction(19 downto 16);
   Rd <= instruction(15 downto 12);
   Rm <= instruction(3 downto 0);
@@ -43,7 +64,7 @@ begin
     CLK => CLK,
     RST => RST,
     IRQServ => IRQServ,
-    IRQ0 => IRQ0,
+    IRQ0 => IRQ0_front,
     IRQ1 => IRQ1,
     IRQ => IRQ,
     VICPC => VICPC

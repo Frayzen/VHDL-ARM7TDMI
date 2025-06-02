@@ -18,10 +18,11 @@ end entity;
 
 architecture rtl of top_level is
   signal RegDisp : word_t;
-  signal RST : std_logic;
+  signal RST, IRQ0 : std_logic;
 begin
 
   RST <= not KEY(0);
+  IRQ0 <= not KEY(1);
 
   REG_PSR : entity work.processor
   port map (

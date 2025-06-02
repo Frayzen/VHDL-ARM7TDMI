@@ -451,4 +451,23 @@ set_global_assignment -name VHDL_FILE ../src/processor.vhd
 set_global_assignment -name VERILOG_FILE DE10_LITE_Golden_Top.v
 set_global_assignment -name SOURCE_FILE db/top_level.cmp.rdb
 
+set_global_assignment -name VHDL_FILE ../src/data/instruction_memory_IRQ.vhd
+set_global_assignment -name VHDL_FILE ../src/interrupt/VIC.vhd
+set_global_assignment -name VHDL_FILE ../src/board/seveng_seg.vhd
+set_global_assignment -name VHDL_FILE ../src/control_unit/proc_state_reg.vhd
+set_global_assignment -name VHDL_FILE ../src/control_unit/pc_manager.vhd
+set_global_assignment -name VHDL_FILE ../src/control_unit/instruction_manager.vhd
+set_global_assignment -name VHDL_FILE ../src/control_unit/decoder.vhd
+set_global_assignment -name VHDL_FILE ../src/data/registers.vhd
+set_global_assignment -name VHDL_FILE ../src/data/memory.vhd
+set_global_assignment -name VHDL_FILE ../src/data/instruction_memory.vhd
+set_global_assignment -name VHDL_FILE ../src/logic/ALU.vhd
+set_global_assignment -name VHDL_FILE ../src/processing_unit/processing_unit_basic.vhd
+set_global_assignment -name VHDL_FILE ../src/processing_unit/processing_unit.vhd
+set_global_assignment -name VHDL_FILE ../src/utils/sign_extender.vhd
+set_global_assignment -name VHDL_FILE ../src/utils/mux.vhd
+set_global_assignment -name VHDL_FILE ../src/types.vhd
+set_global_assignment -name VHDL_FILE ../src/top_level.vhd
+set_global_assignment -name VHDL_FILE ../src/processor.vhd
+set_global_assignment -name VERILOG_FILE DE10_LITE_Golden_Top.v
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
