@@ -27,7 +27,7 @@ architecture Behaviour of Memory is
     for i in 63 downto 0 loop
       result(i) := (others=>'0');
     end loop;
-    for i in 26 downto 16 loop
+    for i in 46 downto 16 loop
       result(i) := x"00000001";
     end loop;
     result(1 ) := x"00000048"; -- H
