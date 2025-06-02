@@ -29,7 +29,8 @@ begin
     RST => RST,
     CLK => CLOCK_50,
     RegDisp => RegDisp,
-    GPIO => GPIO
+    GPIO => GPIO,
+    IRQ0 => IRQ0
   );
 
   SEG1 : entity work.SEVEN_SEG

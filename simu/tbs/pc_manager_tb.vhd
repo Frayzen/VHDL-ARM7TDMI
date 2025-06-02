@@ -13,6 +13,7 @@ architecture Bench of pc_manager_tb is
     signal nPCSel, CLK, RST, IRQ, IRQEnd, IRQServ : std_logic := '0';
     constant CLK_PERIOD : time := 10 ns;
     signal FINISHED : std_logic := '0';
+    signal flags, savedFlags : flags_t;
 begin
     -- Instantiation of the Registers entity
     regs: entity work.pc_manager
@@ -25,7 +26,9 @@ begin
       IRQ => IRQ,
       IRQEnd => IRQEnd,
       IRQServ => IRQServ,
-      VICPC => VICPC
+      VICPC => VICPC,
+      flags => flags,
+      savedFlags => savedFlags
     );
 
     CLK <= not CLK after CLK_PERIOD / 2 when FINISHED /= '1' else '0';

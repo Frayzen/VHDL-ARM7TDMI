@@ -22,10 +22,10 @@ begin
       dbgInstruction => dbgInstruction,
       IRQ0 => IRQ0
     );
-    IRQ0 <= '0';
 
     -- Clock generation
     clk <= not clk after CLK_PERIOD / 2 when finished /= '1' else '0';
+    -- IRQ0 <= not IRQ0 after 100 ns when finished /= '1' else '0';
 
     -- Stimulus process
     stim_proc: process
@@ -37,15 +37,26 @@ begin
         RST <= '0';
         assert dbgInstruction = x"E3A01020" report "First instruction should be loaded" severity error;
         wait for CLK_PERIOD;
+        IRQ0 <= '1';
+        wait for CLK_PERIOD;
+        IRQ0 <= '0';
+        wait for CLK_PERIOD;
 
         -- Test
         for i in 0 to 51 loop
             wait for CLK_PERIOD;
         end loop;
         -- End of test
-        assert dbgInstruction = x"EAFFFFF5" report "Last instruction should be loaded" severity error;
-        -- For UART debug
-        for i in 0 to 12 loop
+        assert dbgInstruction = x"EAFFFFF7" report "Last instruction should be loaded" severity error;
+        -- -- For UART debug
+        for i in 0 to 100 loop
+          wait for 8680.6 ns;
+        end loop;
+        IRQ0 <= '1';
+        wait for CLK_PERIOD;
+        IRQ0 <= '0';
+        wait for CLK_PERIOD;
+        for i in 0 to 100 loop
           wait for 8680.6 ns;
         end loop;
         finished <= '1';

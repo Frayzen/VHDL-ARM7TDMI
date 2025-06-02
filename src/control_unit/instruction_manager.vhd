@@ -19,7 +19,9 @@ entity instruction_manager is
       nPCsel, CLK, RST : in std_logic;
       IRQ, IRQEnd : in std_logic;
       VICPC : in word_t;
-      IRQServ : out std_logic
+      IRQServ : out std_logic;
+      flags: in flags_t;
+      savedFlags: out flags_t := (others => '0')
     );
 end entity;
 
@@ -37,7 +39,9 @@ begin
     IRQ => IRQ,
     IRQEnd => IRQEnd,
     VICPC => VICPC,
-    IRQServ => IRQServ
+    IRQServ => IRQServ,
+    flags => flags,
+    savedFlags => savedFlags
    );
 
 	INSTRUCTION_MEM_IRQ : entity work.instruction_memory_IRQ_INT
@@ -46,9 +50,9 @@ begin
 		 Instruction => instruction
 	  );
 	
-  --INSTRUCTION_MEM : entity work.instruction_memory
-  --port map (
-  --  PC => pc,
-  --  Instruction => instruction
-  --);
+  -- INSTRUCTION_MEM : entity work.instruction_memory
+  -- port map (
+  --   PC => pc,
+  --   Instruction => instruction
+  -- );
 end architecture;

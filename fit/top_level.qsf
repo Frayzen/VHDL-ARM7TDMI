@@ -427,30 +427,15 @@ set_location_assignment PIN_P11 -to CLOCK_50
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK_50
 
 
+
+set_global_assignment -name VHDL_FILE ../src/uart/uart_rx.vhd
+set_global_assignment -name VHDL_FILE ../src/data/instruction_memory_uart_int.vhd
 set_global_assignment -name VHDL_FILE ../src/data/instruction_memory_uart.vhd
 set_global_assignment -name VHDL_FILE ../src/utils/fdiv.vhd
 set_global_assignment -name VHDL_FILE ../src/uart/uart_tx.vhd
 set_global_assignment -name VHDL_FILE ../src/uart/uart_device.vhd
 set_global_assignment -name VHDL_FILE ../src/interrupt/vector_int_controller.vhd
-set_global_assignment -name VHDL_FILE ../src/board/seveng_seg.vhd
-set_global_assignment -name VHDL_FILE ../src/control_unit/proc_state_reg.vhd
-set_global_assignment -name VHDL_FILE ../src/control_unit/pc_manager.vhd
-set_global_assignment -name VHDL_FILE ../src/control_unit/instruction_manager.vhd
-set_global_assignment -name VHDL_FILE ../src/control_unit/decoder.vhd
-set_global_assignment -name VHDL_FILE ../src/data/registers.vhd
-set_global_assignment -name VHDL_FILE ../src/data/memory.vhd
-set_global_assignment -name VHDL_FILE ../src/data/instruction_memory.vhd
-set_global_assignment -name VHDL_FILE ../src/logic/ALU.vhd
-set_global_assignment -name VHDL_FILE ../src/processing_unit/processing_unit_basic.vhd
-set_global_assignment -name VHDL_FILE ../src/processing_unit/processing_unit.vhd
-set_global_assignment -name VHDL_FILE ../src/utils/sign_extender.vhd
-set_global_assignment -name VHDL_FILE ../src/utils/mux.vhd
-set_global_assignment -name VHDL_FILE ../src/types.vhd
-set_global_assignment -name VHDL_FILE ../src/top_level.vhd
-set_global_assignment -name VHDL_FILE ../src/processor.vhd
-set_global_assignment -name VERILOG_FILE DE10_LITE_Golden_Top.v
 set_global_assignment -name SOURCE_FILE db/top_level.cmp.rdb
-
 set_global_assignment -name VHDL_FILE ../src/data/instruction_memory_IRQ.vhd
 set_global_assignment -name VHDL_FILE ../src/interrupt/VIC.vhd
 set_global_assignment -name VHDL_FILE ../src/board/seveng_seg.vhd

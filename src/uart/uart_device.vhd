@@ -8,9 +8,10 @@ Entity UART_DEV is
           RST         : in  std_logic;                          -- Asynchronous Reset active high
           UART_Conf   : uart_byte_t;                            -- Byte to send
           GPIO        : inout std_logic_vector(35 downto 0);    -- GPIO ports
-          DATA_RCV     : out uart_byte_t;                        -- The data read
-          DATA_AVAIL  : out std_logic;                        -- Is the data available
-          GO          : in  std_logic                           -- 1 to Send the byte
+          DATA_RCV    : out uart_byte_t;                        -- The data read
+          DATA_AVAIL  : out std_logic;                          -- Is the data available
+          GO          : in  std_logic;                          -- 1 to Send the byte
+          TXIRQ      : out std_logic                           -- IRQ when TX is done
        );
 end UART_DEV;
 
@@ -50,7 +51,8 @@ UART_TX: entity work.UART_TX
         Din  => UART_Conf,
         Tick  => TICK_TX,
         Tx_Busy => TxBusy,
-        Tx    => Tx
+        Tx    => Tx,
+        TxIrq => TxIrq
     );
 
 UART_RX: entity work.UART_RX

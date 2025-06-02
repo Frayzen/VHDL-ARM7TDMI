@@ -13,6 +13,7 @@ architecture Bench of instruction_manager_tb is
     signal nPCSel, CLK, RST : std_logic := '0';
     
     signal IRQ, IRQEnd, IRQServ : std_logic := '0';
+    signal flags, savedFlags : flags_t;
 
     constant CLK_PERIOD : time := 10 ns;
     signal FINISHED : std_logic := '0';
@@ -28,7 +29,9 @@ begin
       IRQ => IRQ,
       IRQEnd => IRQEnd,
       IRQServ => IRQServ,
-      VICPC => VICPC
+      VICPC => VICPC,
+      flags => flags,
+      savedFlags => savedFlags
     );
 
     CLK <= not CLK after CLK_PERIOD / 2 when FINISHED /= '1' else '0';

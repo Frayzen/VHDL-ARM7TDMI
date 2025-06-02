@@ -45,6 +45,8 @@ begin
                 curr_instruction <= STR;
             when X"EAF" => -- BAL
                 curr_instruction <= BAL;
+            when X"0A0" => -- BEQ
+                curr_instruction <= BEQ;
             when X"BAF" => -- BLT
                 curr_instruction <= BLT;
             when X"EB0" => -- BX
@@ -109,6 +111,11 @@ begin
 
             when BLT =>
                 if PSR(3) = '1' then -- on check le flag N (NZCV)
+                    nPCSel <= '1';
+                end if;
+
+            when BEQ =>
+                if PSR(2) = '1' then -- on check le flag Z (NZCV)
                     nPCSel <= '1';
                 end if;
 

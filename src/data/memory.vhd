@@ -27,9 +27,22 @@ architecture Behaviour of Memory is
     for i in 63 downto 0 loop
       result(i) := (others=>'0');
     end loop;
-    for i in 42 downto 32 loop
+    for i in 53 downto 10 loop
       result(i) := x"00000001";
     end loop;
+    result(1 ) := x"00000048"; -- H
+    result(2 ) := x"00000065"; -- e
+    result(3 ) := x"0000006C"; -- l
+    result(4 ) := x"0000006C"; -- l
+    result(5 ) := x"0000006F"; -- o
+    result(6 ) := x"00000020"; -- SPACE 
+    result(7 ) := x"00000057"; -- W
+    result(8 ) := x"0000006F"; -- o
+    result(9 ) := x"00000072"; -- r
+    result(10) := x"0000006C"; -- l
+    result(11) := x"00000064"; -- d
+    result(12) := x"00000021"; -- !
+    result(13) := x"00000000"; -- \0
     return result;
   end init_data;
 

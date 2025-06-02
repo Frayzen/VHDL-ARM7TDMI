@@ -17,14 +17,15 @@ architecture rtl of processor is
   signal instruction, psrOut, RegBOut, RegAOut, VICPC : word_t;
   signal Rm, Rd, Rn, muxOut : reg_addr_t;
   signal Imm : imm_t;
-  signal flags : flags_t;
+  signal flags, savedFlags, flagsALU : flags_t;
   signal ALUCtr      : std_logic_vector(2 downto 0);
-  signal IRQ, IRQ1, IRQServ : std_logic;
+  signal IRQ, IRQServ : std_logic;
   signal nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff, IRQEnd: std_logic;
   signal UART_CONF : uart_byte_t;
   signal UART_GO : std_logic;
   signal current_instruction : enum_instruction;
   signal IRQ0_front : std_logic := '0';
+  signal TXIRQ : std_logic := '0';
   signal IRQ0_debouncer : unsigned(30 downto 0);
 begin
   
@@ -46,7 +47,12 @@ begin
       end if;
     end if;
   end process;
-  
+
+  with IRQEnd select
+    flags <= flagsALU when '0',
+             savedFlags when '1',
+             (others => 'Z') when others;
+
   Rn <= instruction(19 downto 16);
   Rd <= instruction(15 downto 12);
   Rm <= instruction(3 downto 0);
@@ -65,7 +71,7 @@ begin
     RST => RST,
     IRQServ => IRQServ,
     IRQ0 => IRQ0_front,
-    IRQ1 => IRQ1,
+    IRQ1 => TXIRQ,
     IRQ => IRQ,
     VICPC => VICPC
   );
@@ -81,7 +87,9 @@ begin
     IRQ => IRQ,
     IRQEnd => IRQEnd,
     VICPC => VICPC,
-    IRQServ => IRQServ
+    IRQServ => IRQServ,
+    flags => flags,
+    savedFlags => savedFlags
   );
   
   
@@ -122,7 +130,7 @@ begin
     Imm => Imm,
     RST => RST,
     MemWr => MemWr,
-    flags => flags,
+    flags => flagsALU,
     immCom => ALUSrc,
     resCom => WrSrc,
     RegBOut => RegBOut,
@@ -142,7 +150,7 @@ begin
   port map (
     RST => RST,
     CLK => CLK,
-    WE => RegAff,
+    WE => RegAff and not UART_GO,
     DATAIN => RegBOut,
     DATAOUT => RegDisp
   );
@@ -153,7 +161,8 @@ begin
       CLK => CLK,
       GO => UART_GO,
       GPIO => GPIO,
-      UART_Conf => UART_CONF
+      UART_Conf => UART_CONF,
+      TXIRQ => TXIRQ
   );
 
 end architecture;
