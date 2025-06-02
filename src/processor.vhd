@@ -168,7 +168,7 @@ begin
       TXIRQ => TXIRQ
   );
 
-	INSTRUCTION_MEM_IRQ : entity work.instruction_memory_IRQ
+	INSTRUCTION_MEM_IRQ : entity work.instruction_memory_IRQ_INT
 	  port map (
 		 PC => pc,
 		 Instruction => instruction
