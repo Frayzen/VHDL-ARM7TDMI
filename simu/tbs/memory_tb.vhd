@@ -18,12 +18,12 @@ begin
     -- Instantiation of the Memory entity
     regs: entity WORK.Memory
     port map (
-    Addr => Addr,
-    DataOut => DataOut,
-    DataIn => DataIn,
-        CLK => CLK,
-        RST => RST,
-        WE => WE
+      Addr => Addr,
+      DataOut => DataOut,
+      DataIn => DataIn,
+      CLK => CLK,
+      RST => RST,
+      WE => WE
     );
 
     -- Clock generation
@@ -79,15 +79,15 @@ begin
         
         -- Test 5: Reset test
         RST <= '1';
+        Addr <= std_logic_vector(to_unsigned(15, 6));
         wait for CLK_PERIOD;
-        Addr <= std_logic_vector(to_unsigned(5, 6));
         assert (DataOut = x"00000000") report "Error: reset not clearing registers" severity error;
         Addr <= std_logic_vector(to_unsigned(0, 6));
         assert (DataOut = x"00000000") report "Error: reset not clearing register 0" severity error;
         RST <= '0';
         
         -- Test 6: Write enable functionality test
-        Addr <= std_logic_vector(to_unsigned(7, 6));
+        Addr <= std_logic_vector(to_unsigned(15, 6));
         DataIn <= x"A5A5A5A5";
         WE <= '0';  -- Write disabled
         wait for CLK_PERIOD;

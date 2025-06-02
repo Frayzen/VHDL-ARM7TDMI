@@ -48,9 +48,9 @@ begin
             
             -- Maj de l'adresse
             if IRQ0_memo = '1' then
-                VICPC <= X"00000009";
+                VICPC <= X"00000010";
             elsif IRQ1_memo = '1' then
-                VICPC <= X"00000015";
+                VICPC <= X"00000020";
             else
                 VICPC <= (others => '0');
             end if;

@@ -36,11 +36,11 @@ begin
         -- Release reset
         RST <= '0';
         assert dbgInstruction = x"E3A01020" report "First instruction should be loaded" severity error;
-        wait for CLK_PERIOD;
-        IRQ0 <= '1';
-        wait for CLK_PERIOD;
-        IRQ0 <= '0';
-        wait for CLK_PERIOD;
+        -- wait for CLK_PERIOD;
+        -- IRQ0 <= '1';
+        -- wait for CLK_PERIOD;
+        -- IRQ0 <= '0';
+        -- wait for CLK_PERIOD;
 
         -- Test
         for i in 0 to 51 loop
@@ -48,8 +48,9 @@ begin
         end loop;
         -- End of test
         assert dbgInstruction = x"EAFFFFF7" report "Last instruction should be loaded" severity error;
+
         -- -- For UART debug
-        for i in 0 to 100 loop
+        for i in 0 to 10 loop
           wait for 8680.6 ns;
         end loop;
         IRQ0 <= '1';

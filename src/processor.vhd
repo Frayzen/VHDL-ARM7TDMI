@@ -27,6 +27,9 @@ architecture rtl of processor is
   signal IRQ0_front : std_logic := '0';
   signal TXIRQ : std_logic := '0';
   signal IRQ0_debouncer : unsigned(30 downto 0);
+  signal psrWE : std_logic := '0';
+  signal pc : word_t;
+
 begin
   
   process (clk, rst)
@@ -60,6 +63,8 @@ begin
   offset <= instruction(23 downto 0);
   dbgInstruction <= instruction;
 
+  psrWE <= RegAff when RegAOut /= x"00000040" else '0';
+
   UART_GO <= '1' when current_instruction = STR and RegAOut = x"00000040" else '0';
   with UART_GO select
         UART_CONF <= RegBOut(7 downto 0) when '1',
@@ -76,23 +81,6 @@ begin
     VICPC => VICPC
   );
 
-
-  INSTR_MANAGER : entity work.instruction_manager
-  port map (
-    CLK => CLK, 
-    RST => RST,
-    offset => offset,
-    nPCsel => nPCsel,
-    instruction => instruction,
-    IRQ => IRQ,
-    IRQEnd => IRQEnd,
-    VICPC => VICPC,
-    IRQServ => IRQServ,
-    flags => flags,
-    savedFlags => savedFlags
-  );
-  
-  
 
   DECODER : entity work.decoder
   port map (
@@ -150,10 +138,25 @@ begin
   port map (
     RST => RST,
     CLK => CLK,
-    WE => RegAff and not UART_GO,
     DATAIN => RegBOut,
+    WE => psrWE,
     DATAOUT => RegDisp
   );
+
+  PC_MANAGER : entity work.pc_manager
+  port map (
+    offset => offset,
+    nPCsel => nPCsel,
+    pc => pc,
+    CLK => CLK,
+    RST => RST,
+    IRQ => IRQ,
+    IRQEnd => IRQEnd,
+    VICPC => VICPC,
+    IRQServ => IRQServ,
+    flags => flags,
+    savedFlags => savedFlags
+   );
 
   UART_DEV : entity work.UART_DEV
   port map (
@@ -164,5 +167,12 @@ begin
       UART_Conf => UART_CONF,
       TXIRQ => TXIRQ
   );
+
+	INSTRUCTION_MEM_IRQ : entity work.instruction_memory_IRQ_INT
+	  port map (
+		 PC => pc,
+		 Instruction => instruction
+	  );
+
 
 end architecture;
