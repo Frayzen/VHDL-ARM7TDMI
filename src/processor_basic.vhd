@@ -1,9 +1,10 @@
+
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 use work.types.all;  -- Import all definitions from the package
 
-entity processor is
+entity processor_basic is
     port (
       CLK, RST, IRQ0 : in std_logic;
       GPIO      : inout std_logic_vector(35 downto 0);
@@ -12,7 +13,7 @@ entity processor is
     );
 end entity;
 
-architecture rtl of processor is
+architecture rtl of processor_basic is
   signal offset : pc_offset_t;
   signal instruction, psrOut, RegBOut, RegAOut, VICPC : word_t;
   signal Rm, Rd, Rn, muxOut : reg_addr_t;
@@ -168,7 +169,7 @@ begin
       TXIRQ => TXIRQ
   );
 
-	INSTRUCTION_MEM_IRQ : entity work.instruction_memory_IRQ
+	INSTRUCTION_MEM : entity work.instruction_memory
 	  port map (
 		 PC => pc,
 		 Instruction => instruction
