@@ -19,6 +19,7 @@ architecture RTL of VIC is
     signal IRQ0_memo, IRQ1_memo : std_logic := '0';
     signal IRQ_internal : std_logic := '0'; -- Signal intermediaire
 begin
+	
     process(CLK, RST)
     begin
         if RST = '1' then
@@ -27,7 +28,6 @@ begin
             IRQ_internal <= '0';
             VICPC <= (others => '0');
         elsif rising_edge(CLK) then
-
             -- Capture des fronts montants
             if IRQ0 = '1' and IRQ0_memo = '0' then
                 IRQ0_memo <= '1';

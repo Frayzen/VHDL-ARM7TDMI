@@ -42,9 +42,15 @@ begin
     IRQServ => IRQServ
    );
 
-  INSTRUCTION_MEM : entity work.instruction_memory
-  port map (
-    PC => pc,
-    Instruction => instruction
-  );
+	INSTRUCTION_MEM_IRQ : entity work.instruction_memory_IRQ
+	  port map (
+		 PC => pc,
+		 Instruction => instruction
+	  );
+	
+  --INSTRUCTION_MEM : entity work.instruction_memory
+  --port map (
+  --  PC => pc,
+  --  Instruction => instruction
+  --);
 end architecture;
