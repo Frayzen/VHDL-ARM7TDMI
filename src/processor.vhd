@@ -21,44 +21,28 @@ architecture rtl of processor is
   signal IRQ, IRQ1, IRQServ : std_logic;
   signal nPCSel, RegWr, ALUSrc, PSREn, MemWr, WrSrc, RegSel, RegAff, IRQEnd: std_logic;
 
-  signal inst, inst1, IRQ0_front, IRQ0_clean: std_logic := '0';
+  signal IRQ0_front : std_logic := '0';
+  signal IRQ0_debouncer : unsigned(30 downto 0);
 begin
-  
-   -- Pour empecher le bounching, a reverifier !!!
-	process(clk, rst)
-		 constant DEBOUNCE_DELAY : integer := 500000; -- 10ms at 50MHz
-		 variable count : integer range 0 to DEBOUNCE_DELAY;
-	begin
-		 if rst = '1' then
-			  count := 0;
-			  IRQ0_clean <= '0';
-		 elsif rising_edge(clk) then
-			  if IRQ0 = '1' and IRQ0_clean = '0' then
-					if count < DEBOUNCE_DELAY then
-						 count := count + 1;
-					else
-						 IRQ0_clean <= '1';
-					end if;
-			  elsif IRQ0 = '0' then
-					IRQ0_clean <= '0';
-					count := 0;
-			  end if;
-		 end if;
-	end process;
   
   process (clk, rst)
   begin
-	if rst = '1' then
-	  inst <= '0'; inst1 <= '0';
-	  IRQ0_front <= '0';
-	elsif rising_edge(clk) then
-	  inst1 <= IRQ0;
-	  inst <= inst1;
-	  IRQ0_front <= inst and (not inst1);
-
-	end if;
+    if rst = '1' then
+      IRQ0_front <= '0';
+    elsif rising_edge(clk) then
+      if IRQ0 = '1' then
+        if IRQ0_debouncer = 0 then
+          IRQ0_front <= '1'; 
+        else
+          IRQ0_front <= '0'; 
+        end if;
+        IRQ0_debouncer <= IRQ0_debouncer + 1;
+      else
+        IRQ0_front <= '0'; 
+        IRQ0_debouncer <= (others => '0');
+      end if;
+    end if;
   end process;
-  
   
   Rn <= instruction(19 downto 16);
   Rd <= instruction(15 downto 12);

@@ -8,7 +8,7 @@ end entity;
 
 architecture Bench of Processor_tb is
     -- Component signals
-    signal CLK, RST, FINISHED : std_logic := '0';
+    signal CLK, RST, FINISHED, IRQ0 : std_logic := '0';
     signal dbgInstruction : word_t;
     
     -- Clock period definition
@@ -19,8 +19,10 @@ begin
     port map (
       CLK => CLK,
       RST => RST,
-      dbgInstruction => dbgInstruction
+      dbgInstruction => dbgInstruction,
+      IRQ0 => IRQ0
     );
+    IRQ0 <= '0';
 
     -- Clock generation
     clk <= not clk after CLK_PERIOD / 2 when finished /= '1' else '0';
