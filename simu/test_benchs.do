@@ -1,0 +1,30 @@
+vlib work
+
+do compile.do
+
+vsim ALU_tb
+run -a
+vsim decoder_tb
+run -a
+vsim memory_tb
+run -a
+vsim mux_tb
+run -a
+vsim pc_manager_tb
+run -a
+vsim processing_unit_basic_tb
+run -a
+vsim processing_unit_tb
+run -a
+vsim processor_basic_tb
+run -a
+vsim PSR_tb
+run -a
+vsim registers_tb
+run -a
+vsim sign_extender_tb
+run -a
+vsim uart_tx_tb
+run -a
+vsim vector_int_controller_tb
+run -a
