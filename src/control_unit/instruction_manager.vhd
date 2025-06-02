@@ -40,7 +40,7 @@ begin
     IRQServ => IRQServ
    );
 
-  INSTRUCTION_MEM : entity work.instruction_memory
+  INSTRUCTION_MEM : entity work.instruction_memory_uart
   port map (
     PC => pc,
     Instruction => instruction

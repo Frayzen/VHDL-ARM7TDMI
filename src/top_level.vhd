@@ -5,7 +5,7 @@ use work.types.all;  -- Import all definitions from the package
 
 entity top_level is
     port (
-      CLK : in std_logic;
+      CLOCK_50 : in std_logic;
       KEY			 	:  IN  STD_LOGIC_VECTOR(1 DOWNTO 0);
       SW 				:  IN  STD_LOGIC_VECTOR(9 DOWNTO 0);
       HEX0 		 	:  OUT  STD_LOGIC_VECTOR(0 TO 6);
@@ -25,7 +25,7 @@ begin
   REG_PSR : entity work.processor
   port map (
     RST => RST,
-    CLK => CLK,
+    CLK => CLOCK_50,
     RegDisp => RegDisp
   );
 

@@ -40,14 +40,10 @@ begin
         for i in 0 to 51 loop
             wait for CLK_PERIOD;
         end loop;
-        -- UART OP
-        wait for CLK_PERIOD;
-        wait for CLK_PERIOD;
-        wait for CLK_PERIOD;
         -- End of test
         assert dbgInstruction = x"EAFFFFF5" report "Last instruction should be loaded" severity error;
-
-        for i in 0 to 100 loop
+        -- For UART debug
+        for i in 0 to 12 loop
           wait for 8680.6 ns;
         end loop;
         finished <= '1';

@@ -48,7 +48,6 @@ set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
 set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
 set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 6
 set_location_assignment PIN_N5 -to ADC_CLK_10
-set_location_assignment PIN_N14 -to MAX10_CLK2_50
 set_location_assignment PIN_U17 -to DRAM_ADDR[0]
 set_location_assignment PIN_W19 -to DRAM_ADDR[1]
 set_location_assignment PIN_V18 -to DRAM_ADDR[2]
@@ -424,8 +423,11 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO[32]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO[33]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO[34]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to GPIO[35]
-set_location_assignment PIN_P11 -to CLK
+set_location_assignment PIN_P11 -to CLOCK_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK_50
 
+
+set_global_assignment -name VHDL_FILE ../src/data/instruction_memory_uart.vhd
 set_global_assignment -name VHDL_FILE ../src/utils/fdiv.vhd
 set_global_assignment -name VHDL_FILE ../src/uart/uart_tx.vhd
 set_global_assignment -name VHDL_FILE ../src/uart/uart_device.vhd
@@ -447,4 +449,6 @@ set_global_assignment -name VHDL_FILE ../src/types.vhd
 set_global_assignment -name VHDL_FILE ../src/top_level.vhd
 set_global_assignment -name VHDL_FILE ../src/processor.vhd
 set_global_assignment -name VERILOG_FILE DE10_LITE_Golden_Top.v
+set_global_assignment -name SOURCE_FILE db/top_level.cmp.rdb
+
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
