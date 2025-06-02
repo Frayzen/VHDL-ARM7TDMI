@@ -23,37 +23,38 @@ entity decoder is
 end entity;
 
 architecture rtl of decoder is
-
+  signal curr_instruction : enum_instruction;
 begin
+  current_instruction <= curr_instruction;
 
     process(instruction)
     begin
         -- Opcode
         case instruction(31 downto 20) is
             when X"E3A" => -- MOV
-                current_instruction <= MOV;
+                curr_instruction <= MOV;
             when X"E08" => -- ADDr
-                current_instruction <= ADDr;
+                curr_instruction <= ADDr;
             when X"E28" => -- ADDi
-                current_instruction <= ADDi;
+                curr_instruction <= ADDi;
             when X"E35" => -- CMP
-                current_instruction <= CMP;
+                curr_instruction <= CMP;
             when X"E61" => -- LDR
-                current_instruction <= LDR;
+                curr_instruction <= LDR;
             when X"E60" => -- STR
-                current_instruction <= STR;
+                curr_instruction <= STR;
             when X"EAF" => -- BAL
-                current_instruction <= BAL;
+                curr_instruction <= BAL;
             when X"BAF" => -- BLT
-                current_instruction <= BLT;
+                curr_instruction <= BLT;
             when X"EB0" => -- BX
-                current_instruction <= BX;
+                curr_instruction <= BX;
             when others => 
-                current_instruction <= NOP;
+                curr_instruction <= NOP;
         end case;
     end process;
 
-    process(current_instruction, PSR)
+    process(curr_instruction, PSR)
     begin
         -- Set a 0 
         nPCSel <= '0';
@@ -67,7 +68,7 @@ begin
         RegSel <= '0';
         RegAff <= '0';
 	IRQEnd <= '0';
-        case current_instruction is
+        case curr_instruction is
 
             when MOV =>
                 RegWr  <= '1';

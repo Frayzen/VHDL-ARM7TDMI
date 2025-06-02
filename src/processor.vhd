@@ -14,7 +14,7 @@ end entity;
 
 architecture rtl of processor is
   signal offset : pc_offset_t;
-  signal instruction, psrOut, RegBOut, busWOut, VICPC : word_t;
+  signal instruction, psrOut, RegBOut, RegAOut, VICPC : word_t;
   signal Rm, Rd, Rn, muxOut : reg_addr_t;
   signal Imm : imm_t;
   signal flags : flags_t;
@@ -33,10 +33,10 @@ begin
   offset <= instruction(23 downto 0);
   dbgInstruction <= instruction;
 
-  with RegBOut select
-        UART_CONF <= busWOut(7 downto 0) when x"00000040",
+  UART_GO <= '1' when current_instruction = STR and RegAOut = x"00000040" else '0';
+  with UART_GO select
+        UART_CONF <= RegBOut(7 downto 0) when '1',
         (others => '0') when others;
-  UART_GO <= '1' when current_instruction = STR and RegBOut = x"00000040" else '0';
 
   VIC : entity work.vector_int_controller 
   port map (
@@ -105,7 +105,7 @@ begin
     immCom => ALUSrc,
     resCom => WrSrc,
     RegBOut => RegBOut,
-    busWOut => busWOut
+    RegAOut => RegAOut
   );
 
   REG_PSR : entity work.PSR

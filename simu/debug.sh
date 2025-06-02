@@ -27,7 +27,9 @@ if [ -z $select ]; then
   exit 0;
 fi
 
-. ./compile.sh
+cd -
+
+. ./$(dirname $0)/compile.sh
 
 vsim -do "\
 vlib work;\

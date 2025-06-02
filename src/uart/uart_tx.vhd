@@ -12,6 +12,7 @@ entity UART_TX is
         LD      : in std_logic;          -- Load signal (initiates transmission when high)
         Din     : in uart_byte_t;         -- 8-bit data input to transmit
         Tick    : in std_logic;          -- Baud rate tick (16x or 1x baud rate)
+        TxIrq   : out std_logic;         -- IRQ that raises at end of transmission  
         Tx_Busy : out std_logic;         -- Busy flag (high during transmission)
         Tx      : out std_logic          -- Serial output line
     );
@@ -40,12 +41,13 @@ process(Clk, Reset) begin
       i <= 0;
       Tx_Busy <= '0';
       Tx <= '1';  -- Idle state is high (mark)
-      
+      TxIrq <= '0';
     elsif rising_edge(Clk) then
       -- State machine implementation
       case state is
         -- Idle state: waits for load signal
         when Idle => 
+          TxIrq <= '0';
           if LD = '1' then
             -- Load the shift register with: stop bit (1), data bits, start bit (0)
             reg <= '1' & Din & '0';
@@ -77,6 +79,7 @@ process(Clk, Reset) begin
           Tx_Busy <= '0';    -- No longer busy
           i <= 0;           -- Reset bit counter
           state <= Idle;     -- Return to idle state
+          TxIrq <= '1';
       end case;
     end if;
 end process;
