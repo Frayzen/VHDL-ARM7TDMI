@@ -21,19 +21,6 @@ This repository contains a complete implementation of a 32-bit single-cycle MIPS
 
 ![Processor Degsign](./processor_design.png)
 
-## Part 3 table
-
-| INSTRUCTION | nPCSel | RegWr | ALUSrc | ALUCtr | PSREn | MemWr | WrSrc | RegSel | RegAff |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **ADDi** | 0 | 1 | 1 | 000 | 0 | 0 | 0 | 0 | 0 |
-| **ADDr** | 0 | 1 | 0 | 000 | 0 | 0 | 0 | 0 | 0 |
-| **BAL** | 1 | 0 | 0 | 000 | 0 | 0 | 0 | 0 | 0 |
-| **BLT** | 0 | 0 | 0 | 000 | 0 | 0 | 0 | 0 | 0 |
-| **CMP** | 0 | 0 | 1 | 010 | 1 | 0 | 0 | 0 | 0 |
-| **LDR** | 0 | 1 | 1 | 000 | 0 | 0 | 1 | 1 | 0 |
-| **MOV** | 0 | 1 | 1 | 001 | 0 | 0 | 0 | 0 | 0 |
-| **STR** | 0 | 0 | 1 | 000 | 0 | 1 | 0 | 1 | 1 |
-
 ## Key Features
 - **MIPS ISA Support**: Implements core instructions (R-type, I-type, J-type) **Pipelined Design**: Single-clock-cycle-per-instruction execution
 - **Tested Components**:
@@ -41,25 +28,6 @@ This repository contains a complete implementation of a 32-bit single-cycle MIPS
   - ALU with 16 operations (AND, OR, ADD, SUB, etc.)
   - Branch prediction unit
 - **FPGA Proven**: Synthesizable design tested on Intel/Altera DE10 boards
-
-## Repository Structure
-
-/ARM7TDMI
-│
-├── /src # VHDL source files
-│ ├── TODO # Explain TODO
-│ └── TODO # Explain TODO
-│
-├── /sim # Simulation files
-│ ├── TODO # Explain TODO
-│ └── TODO # Explain TODO
-├── /simu # FPGA project files
-│ ├── TODO # Explain TODO
-│ └── TODO # Explain TODO
-│
-└── /docs # Documentation
-  ├── TODO # Explain TODO
-  └── TODO # Explain TODO
 
 ## Simulation & Verification
 ### Requirements
