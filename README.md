@@ -4,6 +4,11 @@
 ![ModelSim](https://img.shields.io/badge/Simulator-ModelSim-orange)
 ![FPGA](https://img.shields.io/badge/Target-FPGA-brightgreen)
 
+## Authors
+
+* Florian LAINE (Frayzen)
+* Sanghyeon PARK (Ropopo) 
+
 ## Project Overview
 This repository contains a complete implementation of a 32-bit single-cycle MIPS processor in VHDL, developed as part of a digital design course. The processor integrates fundamental computer components including:
 
